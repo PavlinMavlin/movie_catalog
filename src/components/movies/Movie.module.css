@@ -1,0 +1,23 @@
+.movieBlock {
+    width: 135px;
+    height: 250px;
+    /*border: 1px solid black;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 25%;
+    margin: 10px 0;
+}
+.img{
+    width: 120px;
+    height: 150px;
+    border: 7px solid #b9b4b4;
+}
+
+.movieContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

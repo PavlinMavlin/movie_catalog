@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
 .img {
@@ -14,6 +15,7 @@
     background-position: center;
     background-repeat: no-repeat;
     border: 7px solid #b9b4b4;
+
 }
 
 p {

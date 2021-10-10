@@ -66,7 +66,7 @@ export const fetchMovieTC = (title: string, page: number): ThunkAction<void, App
             dispatch(setRequestStatusAC("succeeded"))
             dispatch(setMovieAC(res.data))
 
-            debugger
+
         } catch (error) {
             dispatch(setRequestStatusAC("failed"))
             console.log(error)

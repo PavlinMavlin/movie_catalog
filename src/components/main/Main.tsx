@@ -1,14 +1,8 @@
 import style from "../main/Main.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../redux/store";
-import {SearchType} from "../../api/api";
-import React, {ChangeEvent, useEffect} from "react";
-import {
-    fetchMovieTC,
-    setSearchTitleAC,
-    setNewCurrentPageAC,
-    RequestStatusType
-} from "../../redux/reducer/movie-reducer";
+import React, {useEffect} from "react";
+import {fetchMovieTC, setNewCurrentPageAC} from "../../redux/reducer/movie-reducer";
 import {MoviesList} from "../movies/MoviesList";
 import {Pagination} from "@material-ui/lab";
 import {CircularProgress} from "@material-ui/core"
@@ -38,10 +32,11 @@ export const Main = React.memo(() => {
         </div>
     }
 
-
     return (<div className={style.mainBlock}>
         <div className={style.search}>
-            <h2>Your search for: {title}, {totalResults} results found</h2>
+            {Search.length > 0 ? <p>Your search for: {title}, {totalResults} results found</p>
+                : <p>Movie list is empty. Please enter movie.</p>
+            }
         </div>
         <div className={style.mainContainer}>
             <MoviesList movie={Search} title={title} totalResults={totalResults}/>

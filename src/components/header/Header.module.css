@@ -16,20 +16,7 @@
         grid-template-rows: repeat(3, 1fr);
         grid-template-columns: none;
     }
-
-    }
-
-
-/*@media screen and (orientation: landscape) and (min-height: 200px) and (max-height: 450px) {*/
-/*    .headerContainer {*/
-/*        display: grid;*/
-/*        grid-template-rows: repeat(3, 1fr);*/
-/*        justify-items: center;*/
-/*        align-items: center;*/
-/*    }*/
-
-
-/*}*/
+}
 
 select {
     border: none;

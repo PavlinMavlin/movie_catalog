@@ -1,5 +1,5 @@
 .movieBlock {
-   min-width: 135px;
+    min-width: 135px;
     min-height: 250px;
     display: flex;
     flex-direction: column;
@@ -10,12 +10,25 @@
 .img {
     width: 120px;
     height: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 7px solid #b9b4b4;
 }
 
+p {
+    margin: 0 auto;
+    word-break: break-all
+}
+
 .movieContainer {
+    max-width: 125px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /*border: 1px solid black;*/
+    overflow: hidden
 }
+
+

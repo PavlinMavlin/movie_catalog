@@ -1,5 +1,5 @@
 import {ChangeEvent, useCallback, useState, KeyboardEvent} from "react";
-
+import style from "../input/SearchInput.module.css"
 
 type SearchInputPropsType = {
     onKeyPressEnter: (value: string) => void
@@ -13,17 +13,15 @@ export const SearchInput = (props: SearchInputPropsType) => {
         setSearchTitleValue(e.currentTarget.value)
     }
 
-    const activate = () => {
-        props.onKeyPressEnter(searchTitleValue.trim())
-        setSearchTitleValue("")
-    }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13) {
-            activate()
+            props.onKeyPressEnter(searchTitleValue.trim())
+            setSearchTitleValue("")
         }
     }
     return (<div>
-        <input value={searchTitleValue} onChange={onChangeHandler} onKeyPress={onKeyPressHandler} autoFocus
-               onBlur={activate} size={60}/>
+        <input value={searchTitleValue} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
+               className={style.search}
+        />
     </div>)
 }

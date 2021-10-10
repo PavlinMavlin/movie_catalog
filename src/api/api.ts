@@ -3,13 +3,11 @@ import axios from "axios"
 
 const instance = axios.create({
     baseURL: "https://www.omdbapi.com/",
-    //https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8 &s=Batman&page=2
-    //https://www.omdbapi.com/?i=tt3896198&apikey=8523cbb8 &s=Batman&page=2
 })
 //API
 export const movieAPI = {
-    getMovie(title: string) {
-        return instance.get(`?i=tt3896198&apikey=8523cbb8 &s=${title}&page=5`)
+    getMovie(title: string, page: number) {
+        return instance.get<MovieSearchType>(`?i=tt3896198&apikey=8523cbb8 &s=${title}&page=${page}`)
     },
 
 }

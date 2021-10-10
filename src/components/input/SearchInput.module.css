@@ -1,0 +1,18 @@
+.search{
+    width:  450px;
+    height: 20px;
+    font-size:16px;
+}
+@media only screen and (max-width: 820px)  {
+    .search {
+        width:  250px;
+        /*height: 20px;*/
+    }
+
+}
+@media only screen and (max-width: 400px)  {
+    .search {
+        width:  150px;
+        /*height: 20px;*/
+    }
+}

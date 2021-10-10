@@ -6,6 +6,8 @@ import {movieAPI, MovieSearchType, SearchType} from "../../api/api";
 enum CONTACTS_ACTIONS_TYPES {
     SET_MOVIE = "SET_MOVIE",
     SET_SEARCH_TITLE = "SET_SEARCH_TITLE",
+    SET_NEW_CURRENT_PAGE = "SET_NEW_CURRENT_PAGE",
+    SET_REQUEST_STATUS = "SET_REQUEST_STATUS",
 
 }
 
@@ -13,7 +15,9 @@ enum CONTACTS_ACTIONS_TYPES {
 const initialState = {
     Search: [] as SearchType[],
     totalResults: "",
-    title: "batman",
+    title: "",
+    page: 1,
+    status: "idle" as RequestStatusType,
 }
 
 
@@ -26,6 +30,13 @@ export const movieReducer = (state: InitialStateType = initialState, action: App
             return {...state, ...action.movieState}
         case CONTACTS_ACTIONS_TYPES.SET_SEARCH_TITLE:
             return {...state, title: action.title}
+        case CONTACTS_ACTIONS_TYPES.SET_NEW_CURRENT_PAGE:
+            return {...state, page: action.page}
+        case CONTACTS_ACTIONS_TYPES.SET_REQUEST_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
@@ -39,16 +50,25 @@ export const setMovieAC = (movieState: MovieSearchType) => (
 export const setSearchTitleAC = (title: string) => (
     {type: CONTACTS_ACTIONS_TYPES.SET_SEARCH_TITLE, title} as const)
 
+export const setNewCurrentPageAC = (page: number) => (
+    {type: CONTACTS_ACTIONS_TYPES.SET_NEW_CURRENT_PAGE, page} as const)
+
+export const setRequestStatusAC = (status: RequestStatusType) => {
+    return {type: CONTACTS_ACTIONS_TYPES.SET_REQUEST_STATUS, status} as const
+}
 
 //thunk
-export const fetchMovieTC = (title: string): ThunkAction<void, AppRootStateType, unknown, AppActionsType> =>
+export const fetchMovieTC = (title: string, page: number): ThunkAction<void, AppRootStateType, unknown, AppActionsType> =>
     async (dispatch) => {
         try {
-            debugger
-            const res = await movieAPI.getMovie(title)
+            dispatch(setRequestStatusAC("loading"))
+            const res = await movieAPI.getMovie(title, page)
+            dispatch(setRequestStatusAC("succeeded"))
             dispatch(setMovieAC(res.data))
+
             debugger
         } catch (error) {
+            dispatch(setRequestStatusAC("failed"))
             console.log(error)
         } finally {
             // some code...
@@ -58,75 +78,10 @@ export const fetchMovieTC = (title: string): ThunkAction<void, AppRootStateType,
 
 //types
 
-
+export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 export type MovieReducersActionTypes = ReturnType<typeof setMovieAC>
     | ReturnType<typeof setSearchTitleAC>
+    | ReturnType<typeof setNewCurrentPageAC>
+    | ReturnType<typeof setRequestStatusAC>
 
 
-// export const removeContactAC = (id: number) => (
-//     {type: CONTACTS_ACTIONS_TYPES.REMOVE_CONTACT, id} as const)
-//
-// export const addContactAC = (name: string, lastName: string, id: number) => (
-//     {type: CONTACTS_ACTIONS_TYPES.ADD_CONTACT, name, lastName, id} as const)
-//
-// export const updateContactAC = (name: string, lastName: string, id: number) => (
-//     {type: CONTACTS_ACTIONS_TYPES.UPDATE_CONTACT, id, name, lastName} as const)
-
-
-// export const updateContactTC = (name: string, lastName: string, id: number): ThunkAction<void, AppRootStateType, unknown, AppActionsType> =>
-//     async (dispatch, getState) => {
-//         try {
-//             const res = await contactsAPI.updateContact(name, lastName, id)
-//             dispatch(updateContactAC(res.data.name, res.data.job, id))
-//
-//         } catch (error) {
-//             console.log(error)
-//
-//         } finally {
-//             // some code...
-//         }
-//     }
-// export const addCardTC = (name: string, lastName: string): ThunkAction<void, AppRootStateType, unknown, AppActionsType> =>
-//     async (dispatch, getState) => {
-//         try {
-//             const res = await contactsAPI.createContact(name, lastName)
-//             dispatch(addContactAC(res.data.name, res.data.job, +(res.data.id)))
-//         } catch (error) {
-//             console.log(error)
-//         } finally {
-//             // some code...
-//         }
-//     }
-// export const deleteContactTC = (id: number): ThunkAction<void, AppRootStateType, unknown, AppActionsType> =>
-//     async (dispatch, getState) => {
-//         try {
-//             const res = await contactsAPI.deleteContact(id)
-//             dispatch(removeContactAC(id))
-//         } catch (error) {
-//             console.log(error)
-//         } finally {
-//             // some code...
-//         }
-//     }
-//
-// case CONTACTS_ACTIONS_TYPES.REMOVE_CONTACT: {
-//     return {...state, data: state.data.filter(ct => ct.id !== action.id)}
-// }
-// case CONTACTS_ACTIONS_TYPES.ADD_CONTACT:
-// const newContact: ContactType = {
-//     id: +(action.id),
-//     avatar: "",
-//     email: "efwefwfwef@e.com",
-//     first_name: action.name,
-//     last_name: action.lastName
-// }
-// return {
-//     ...state, data: [...state.data, newContact]
-// }
-// case CONTACTS_ACTIONS_TYPES.UPDATE_CONTACT:
-// const contact = state.data.find(ct => ct.id === action.id);
-// if (contact) {
-//     contact.first_name = action.name;
-//     contact.last_name = action.lastName;
-// }
-// return {...state, data: [...state.data]}

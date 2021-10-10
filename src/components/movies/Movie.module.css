@@ -1,21 +1,19 @@
 .movieBlock {
-    width: 135px;
-    height: 250px;
-    /*border: 1px solid black;*/
+   min-width: 135px;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-basis: 25%;
-    margin: 10px 0;
 }
-.img{
+
+.img {
     width: 120px;
     height: 150px;
     border: 7px solid #b9b4b4;
 }
 
-.movieContainer{
+.movieContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
